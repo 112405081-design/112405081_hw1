@@ -19,6 +19,7 @@ type ExperienceItem = {
 type PhotographyItem = {
   src: string;
   alt: string;
+  caption: string;
   span?: string;
 };
 
@@ -53,22 +54,25 @@ const EXPERIENCE_ITEMS: ExperienceItem[] = [
   {
     title: "虎牌啤酒企劃案",
     imageSrc: "/exp5.jpg",
-    note: "無數個夜晚在商院拼死拼活地開會～第二名啦～",
+    note: "開會開到成為商院地縛靈～苦盡甘來獲得第二名！",
   },
 ];
 
 const PHOTOGRAPHY_ITEMS: PhotographyItem[] = [
-  { src: "/photos/v1.jpg", alt: "vertical 1", span: "md:row-span-2" },
-  { src: "/photos/h1.jpg", alt: "horizontal 1", span: "md:col-span-2" },
-  { src: "/photos/v2.jpg", alt: "vertical 2" },
-  { src: "/photos/h2.jpg", alt: "horizontal 2" },
-  { src: "/photos/v3.jpg", alt: "vertical 3", span: "md:row-span-2" },
-  { src: "/photos/h3.jpg", alt: "horizontal 3", span: "md:col-span-2" },
-  { src: "/photos/v4.jpg", alt: "vertical 4" },
-  { src: "/photos/h4.jpg", alt: "horizontal 4" },
-  { src: "/photos/v5.jpg", alt: "vertical 5", span: "md:row-span-2" },
-  { src: "/photos/h5.jpg", alt: "horizontal 5" },
-  { src: "/photos/h6.jpg", alt: "horizontal 6", span: "md:col-span-2" },
+  { src: "/photos/v1.jpg", alt: "vertical 1", caption: "去阿姆斯特丹看到的浪漫情侶1", span: "md:row-span-2" },
+  { src: "/photos/h1.jpg", alt: "horizontal 1", caption: "亮亮的水面", span: "md:col-span-2" },
+  { src: "/photos/v4-dog.jpg", alt: "vertical 4", caption: "多多白白" },
+  { src: "/photos/h2.jpg", alt: "horizontal 2", caption: "亮亮的水面2" },
+  { src: "/photos/v3.jpg", alt: "vertical 3", caption: "日本的軌道", span: "md:row-span-2" },
+  { src: "/photos/h3.jpg", alt: "horizontal 3", caption: "橋上的人都會跟我們打招呼～很可愛", span: "md:col-span-2" },
+  { src: "/photos/h4.jpg", alt: "horizontal 4", caption: "眯眼小咪" },
+  { src: "/photos/v5.jpg", alt: "vertical 5", caption: "日本的海", span: "md:row-span-2" },
+  { src: "/photos/h7.jpg", alt: "horizontal 7", caption: "第一次跟朋友出國", span: "md:row-span-2" },
+  { src: "/photos/v2-new.jpg", alt: "vertical 2", caption: "浪漫情侶2" },
+  { src: "/photos/h5.jpg", alt: "horizontal 5", caption: "大室山" },
+  { src: "/photos/h9-dog.jpg", alt: "horizontal 9", caption: "去當天使的寶寶" },
+  { src: "/photos/h6.jpg", alt: "horizontal 6", span: "md:col-span-2", caption: "第二次跟朋友出遊" },
+  { src: "/photos/h10.jpg", alt: "horizontal 10", caption: "到處都是鏡子的韓國" },
 ];
 
 function classNames(...names: Array<string | false | null | undefined>) {
@@ -89,7 +93,7 @@ function Avatar({ name, src }: { name: string; src?: string }) {
   }, [name]);
 
   return (
-    <div className="relative h-32 w-32 overflow-hidden rounded-full ring-1 ring-black/10">
+    <div className="relative h-32 w-32 overflow-hidden rounded-full ring-1 ring-black/10 transition-transform duration-500 hover:scale-105">
       {src ? (
         <Image
           src={src}
@@ -127,7 +131,7 @@ function SectionTitle({
         {title}
       </h2>
       {subtitle ? (
-        <p className="text-sm leading-6 text-zinc-600 sm:text-base sm:leading-7">
+        <p className="text-sm leading-6 text-zinc-950 sm:text-base sm:leading-7">
           {subtitle}
         </p>
       ) : null}
@@ -158,10 +162,10 @@ export default function Home() {
   const [active, setActive] = useState<SectionKey>("intro");
 
   return (
-    <div className="h-dvh overflow-hidden bg-zinc-50">
-      <div className="mx-auto grid h-full w-full max-w-[1800px] grid-cols-1 gap-4 px-3 py-4 sm:px-4 sm:py-6 md:grid-cols-[220px_minmax(0,1fr)] md:gap-6 md:px-6 md:py-8 lg:grid-cols-[272px_minmax(0,1fr)] lg:gap-8 lg:px-8 lg:py-10 xl:grid-cols-[304px_minmax(0,1fr)] xl:px-10">
-        <aside className="h-full">
-          <Card className="h-full space-y-4 sm:space-y-5">
+    <div className="min-h-dvh bg-gradient-to-br from-[#817483]/70 via-[#817483]/55 to-[#d7e3f1]/70">
+      <div className="mx-auto grid w-full max-w-[1800px] grid-cols-[220px_minmax(0,1fr)] gap-4 px-3 py-4 sm:px-4 sm:py-6 md:gap-6 md:px-6 md:py-8 lg:grid-cols-[272px_minmax(0,1fr)] lg:gap-8 lg:px-8 lg:py-10 xl:grid-cols-[304px_minmax(0,1fr)] xl:px-10">
+        <aside className="lg:sticky lg:top-6 lg:self-start">
+          <Card className="space-y-4 sm:space-y-5 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
             <div className="flex flex-col items-center text-center">
               <Avatar name="Pei Pei" src="/DSC09408.JPG" />
               <div className="mt-2 w-full min-w-0 sm:mt-3">
@@ -191,9 +195,9 @@ export default function Home() {
                     type="button"
                     onClick={() => setActive(s.key)}
                     className={classNames(
-                      "w-full rounded-xl px-2 py-2 text-left text-xs ring-1 transition sm:rounded-2xl sm:px-5 sm:py-4 sm:text-lg",
+                      "w-full rounded-xl px-2 py-2 text-left text-xs ring-1 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md sm:rounded-2xl sm:px-5 sm:py-4 sm:text-lg",
                       active === s.key
-                        ? "bg-zinc-900 text-white ring-zinc-900"
+                        ? "bg-[#817483]/60 text-white ring-[#817483]/80"
                         : "bg-white text-zinc-800 ring-black/5 hover:bg-zinc-50"
                     )}
                   >
@@ -208,8 +212,8 @@ export default function Home() {
                 <div className="text-[10px] font-semibold text-zinc-500 sm:text-xs">
                   Email
                 </div>
-                <div className="mt-1 truncate text-[11px] font-medium text-zinc-900 sm:text-sm">
-                  yourname@email.com
+                <div className="mt-1 overflow-x-auto whitespace-nowrap text-[11px] font-medium text-zinc-900 sm:text-sm">
+                  112405081@g.nccu.edu.tw
                 </div>
               </div>
               <div className="rounded-xl bg-white p-2 ring-1 ring-black/5 sm:p-3">
@@ -224,130 +228,128 @@ export default function Home() {
           </Card>
         </aside>
 
-        <main className="min-w-0 overflow-y-auto pr-0 md:pr-2">
+        <main className="min-w-0 pr-0 md:pr-2">
           <div className="space-y-8">
             {active === "intro" ? (
-              <Card className="space-y-6 p-5 sm:p-8">
-                <SectionTitle title="About me" />
+              <Card className="relative min-h-[711px] overflow-hidden p-5 transition-all duration-500 hover:shadow-2xl sm:p-8">
+                <Image
+                  src="/about.jpg"
+                  alt="about background"
+                  fill
+                  className="object-cover"
+                />
 
-                <div className="rounded-2xl border border-white/30 bg-white/20 p-6 shadow-md backdrop-blur-md">
-                  <ul className="space-y-2 text-sm leading-6 text-zinc-900 sm:text-base">
-                    <li>
-                      大家好我是ㄆㄆㄆ～目前就讀政大廣告系三年級、雙主修數位內容學程（真的好難இдஇ）
-                    </li>
-                    <li>喜歡設計、攝影，還在慢慢摸索自己的風格中。</li>
-                    <li>不折不扣的 INFP，但最近有轉向 T 人的趨勢，很恐怖了！</li>
-                  </ul>
-                </div>
+                <div className="absolute inset-0 bg-white/35" />
 
-                <div className="rounded-2xl bg-white p-7 ring-1 ring-black/5">
-                  <div className="text-lg font-semibold text-zinc-900">
-                    Skills
+                <div className="relative z-10 space-y-9">
+                  <SectionTitle title="About me" />
+
+                  <div className="rounded-2xl bg-white/30 p-7 ring-1 ring-black/5 shadow-sm backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:bg-white/40 hover:shadow-xl">
+                    <ul className="space-y-3 text-sm leading-6 text-zinc-900 sm:text-base">
+                      <li>
+                        大家好我是ㄆㄆㄆ～目前就讀政大廣告系三年級、雙主修數位內容學程（真的好難இдஇ）
+                      </li>
+                      <li>喜歡設計、攝影，還在慢慢摸索自己的風格中。</li>
+                      <li>非常內向的INFP，喜歡胡思亂想</li>
+                    </ul>
                   </div>
-                  <div className="mt-3 flex flex-wrap gap-2">
-                    {["Illustrator", "Figma", "Strategic Insight"].map((tag) => (
-                      <span
-                        key={tag}
-                        className="rounded-full bg-zinc-100 px-4 py-2 text-base font-medium text-zinc-800 ring-1 ring-black/5"
-                      >
-                        {tag}
-                      </span>
-                    ))}
+
+                  <div className="rounded-2xl bg-white/30 p-7 ring-1 ring-black/5 shadow-sm backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:bg-white/40 hover:shadow-xl">
+                    <div className="text-lg font-semibold text-zinc-900">
+                      Skills
+                    </div>
+
+                    <div className="mt-3 flex flex-wrap gap-2">
+                      {["Illustrator", "Figma", "Strategic Insight"].map((tag) => (
+                        <span
+                          key={tag}
+                          className="rounded-full bg-zinc-100 px-4 py-2 text-base font-medium text-zinc-800 ring-1 ring-black/5 transition-transform duration-300 hover:-translate-y-0.5"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
                   </div>
                 </div>
               </Card>
             ) : null}
 
             {active === "about" ? (
-              <Card className="space-y-6 p-5 sm:p-8">
-                <SectionTitle title="Experience" subtitle="一些小經歷" />
+              <Card className="relative overflow-hidden p-5 transition-all duration-500 hover:shadow-2xl sm:p-8">
+                <Image
+                  src="/about.jpg"
+                  alt="experience background"
+                  fill
+                  className="object-cover"
+                />
 
-                <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-                  {EXPERIENCE_ITEMS.map((item) => (
-                    <div
-                      key={item.title}
-                      className="flex flex-col space-y-4 rounded-2xl bg-zinc-50 p-4 ring-1 ring-black/5 sm:p-5"
-                    >
-                      <h3 className="text-base font-semibold text-zinc-900 sm:text-lg">
-                        {item.title}
-                      </h3>
+                <div className="absolute inset-0 bg-white/35" />
 
-                      <div className="relative mx-auto w-full aspect-4/3 overflow-hidden rounded-xl bg-zinc-100 ring-1 ring-black/5">
-                        {item.imageSrc ? (
+                <div className="relative z-10 space-y-6">
+                  <SectionTitle title="Experience" subtitle="一些小經歷" />
+
+                  <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+                    {EXPERIENCE_ITEMS.map((item) => (
+                      <div
+                        key={item.title}
+                        className="group flex flex-col space-y-4 rounded-2xl bg-white/30 p-4 ring-1 ring-black/5 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:bg-white/40 hover:shadow-xl sm:p-5"
+                      >
+                        <h3 className="text-base font-semibold text-zinc-900 sm:text-lg">
+                          {item.title}
+                        </h3>
+
+                        <div className="relative w-full aspect-4/3 overflow-hidden rounded-xl bg-zinc-100 ring-1 ring-black/5">
                           <Image
-                            src={item.imageSrc}
+                            src={item.imageSrc!}
                             alt={item.title}
                             fill
-                            className="object-cover"
+                            className="object-cover transition-transform duration-500 group-hover:scale-105"
                           />
-                        ) : (
-                          <div className="grid h-full w-full place-items-center text-sm text-zinc-500">
-                            放照片位置
-                          </div>
-                        )}
-                      </div>
+                        </div>
 
-                      <div className="text-sm leading-6 text-zinc-600 sm:text-base">
-                        {item.note}
+                        <div className="text-sm text-zinc-700 sm:text-base">
+                          {item.note}
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
               </Card>
             ) : null}
 
             {active === "interests" ? (
-              <Card className="space-y-6 p-5 sm:p-8">
-                <SectionTitle title="Interests" subtitle="街舞相關經歷" />
+              <Card className="relative overflow-hidden p-5 transition-all duration-500 hover:shadow-2xl sm:p-8">
+                <Image
+                  src="/about.jpg"
+                  alt="interests background"
+                  fill
+                  className="object-cover"
+                />
 
-                <div className="rounded-2xl bg-white p-7 ring-1 ring-black/5">
-                  <div className="text-2xl font-semibold text-zinc-900 sm:text-3xl">
-                    College High 世界大學街舞高峰會
-                  </div>
+                <div className="absolute inset-0 bg-white/35" />
 
-                  <div className="mt-6 space-y-8">
-                    <div>
-                      <div className="mb-3 text-3xl font-semibold text-zinc-900">
-                        二十一屆 Hip Hop 四強
-                      </div>
-                      <iframe
-                        className="w-full aspect-video rounded-xl"
-                        src="https://www.youtube.com/embed/ppkvY5O6078"
-                        allowFullScreen
-                      />
+                <div className="relative z-10 space-y-6">
+                  <SectionTitle title="Interests" subtitle="不務正業的熱舞系" />
+
+                  <div className="rounded-2xl bg-white/30 p-7 ring-1 ring-black/5 backdrop-blur-md transition-all duration-300 hover:bg-white/40 hover:shadow-xl">
+                    <div className="text-2xl font-semibold text-zinc-900 sm:text-3xl">
+                      College High 世界大學街舞高峰會
                     </div>
 
-                    <div>
-                      <div className="mb-3 text-3xl font-semibold text-zinc-900">
-                        二十一屆 Female 八強
-                      </div>
-                      <iframe
-                        className="w-full aspect-video rounded-xl"
-                        src="https://www.youtube.com/embed/4VRS46HU9Cw"
-                        allowFullScreen
-                      />
-                    </div>
-
-                    <div>
-                      <div className="mb-3 text-3xl font-semibold text-zinc-900">
-                        二十屆 Hip Hop 八強
-                      </div>
-                      <iframe
-                        className="w-full aspect-video rounded-xl"
-                        src="https://www.youtube.com/embed/Dj3AhDceHWQ"
-                        allowFullScreen
-                      />
-                    </div>
-
-                    <div>
-                      <div className="mb-3 text-3xl font-semibold text-zinc-900">
-                        二十屆 Female 八強
-                      </div>
-                      <iframe
-                        className="w-full aspect-video rounded-xl"
-                        src="https://www.youtube.com/embed/7c6p-tKgwn8"
-                        allowFullScreen
-                      />
+                    <div className="mt-6 space-y-8">
+                      {[
+                        "ppkvY5O6078",
+                        "4VRS46HU9Cw",
+                        "Dj3AhDceHWQ",
+                        "7c6p-tKgwn8",
+                      ].map((id, i) => (
+                        <iframe
+                          key={i}
+                          className="w-full aspect-video rounded-xl transition-transform duration-300 hover:scale-[1.01] hover:shadow-lg"
+                          src={`https://www.youtube.com/embed/${id}`}
+                          allowFullScreen
+                        />
+                      ))}
                     </div>
                   </div>
                 </div>
@@ -355,29 +357,43 @@ export default function Home() {
             ) : null}
 
             {active === "photograph" ? (
-              <Card className="space-y-6 p-5 sm:p-8">
-                <SectionTitle
-                  title="Photography"
-                  subtitle="以日常、構圖與光影為主的影像練習。"
+              <Card className="relative overflow-hidden p-5 transition-all duration-500 hover:shadow-2xl sm:p-8">
+                <Image
+                  src="/about.jpg"
+                  alt="photography background"
+                  fill
+                  className="object-cover"
                 />
 
-                <div className="grid grid-cols-1 gap-4 md:grid-cols-3 md:auto-rows-[220px]">
-                  {PHOTOGRAPHY_ITEMS.map((item, idx) => (
-                    <div
-                      key={idx}
-                      className={classNames(
-                        "group relative overflow-hidden rounded-2xl bg-zinc-100 ring-1 ring-black/5",
-                        item.span
-                      )}
-                    >
-                      <Image
-                        src={item.src}
-                        alt={item.alt}
-                        fill
-                        className="object-cover transition duration-500 group-hover:scale-[1.03]"
-                      />
-                    </div>
-                  ))}
+                <div className="absolute inset-0 bg-white/35" />
+
+                <div className="relative z-10 space-y-6">
+                  <SectionTitle title="Photography" subtitle="一些日常隨手拍。" />
+
+                  <div className="grid grid-cols-2 auto-rows-[140px] gap-4 md:grid-cols-3 md:auto-rows-[220px]">
+                    {PHOTOGRAPHY_ITEMS.map((item, idx) => (
+                      <div
+                        key={idx}
+                        className={classNames(
+                          "group relative overflow-hidden rounded-2xl transition-all duration-300 hover:-translate-y-1 hover:shadow-xl",
+                          item.span
+                        )}
+                      >
+                        <Image
+                          src={item.src}
+                          alt={item.alt}
+                          fill
+                          className="object-cover transition-all duration-500 group-hover:scale-110 group-hover:brightness-90"
+                        />
+
+                        <div className="absolute inset-0 bg-black/0 transition-all duration-300 group-hover:bg-black/45" />
+
+                        <div className="absolute inset-0 flex translate-y-4 items-end p-4 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+                          <div className="text-sm text-white">{item.caption}</div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </Card>
             ) : null}
